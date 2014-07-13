@@ -18,6 +18,22 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @Mod(modid = GroovyMod.MODID, name = GroovyMod.NAME, version = GroovyMod.VERSION)
 public class GroovyMod {
 	
+	private static enum GroovyArmorType{
+		helmet(0),
+		chestplate(1),
+		legs(2),
+		boots(3);
+		
+		private int typeNum;
+
+		private GroovyArmorType(int typeNum) {
+			this.typeNum = typeNum;
+		}
+		
+		public int getTypeNum() {
+			return typeNum;
+		}
+	}
 	
 	public class GroovyArmor extends ItemArmor {
 
@@ -28,8 +44,12 @@ public class GroovyMod {
 
 		public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
 			
-			if (stack.getItem() == GroovyMod.groovy_helmet) {
+			if (stack.getItem() == GroovyMod.groovy_helmet || 
+					stack.getItem() == GroovyMod.groovy_chestplate ||
+					stack.getItem() == GroovyMod.groovy_boots) {
 				return GroovyMod.MODID + ":textures/armor/groovy_layer_1.png";
+			}else if (stack.getItem() == GroovyMod.groovy_leggings) {
+				return GroovyMod.MODID + ":textures/armor/groovy_layer_2.png";
 			}
 			return null;
 		}
@@ -41,6 +61,9 @@ public class GroovyMod {
 	public static final String NAME = "Groovy Mod";
 	
 	public static Item groovy_helmet;
+	public static Item groovy_leggings;
+	public static Item groovy_chestplate;
+	public static Item groovy_boots;
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyMaterial = EnumHelper
@@ -50,13 +73,31 @@ public class GroovyMod {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
-		groovy_helmet = new GroovyArmor(groovyMaterial, 0, 0)
+		groovy_helmet = new GroovyArmor(groovyMaterial, 0, GroovyArmorType.helmet.getTypeNum())
 		 .setUnlocalizedName("GroovyHelmet")
 		 .setCreativeTab(CreativeTabs.tabCombat)
 		 .setTextureName(GroovyMod.MODID + ":groovy_helmet");
-
+		
+		groovy_chestplate = new GroovyArmor(groovyMaterial, 1, GroovyArmorType.chestplate.getTypeNum())
+		 .setUnlocalizedName("GroovyChestplate")
+		 .setCreativeTab(CreativeTabs.tabCombat)
+		 .setTextureName(GroovyMod.MODID + ":groovy_chestplate");
+		
+		groovy_leggings = new GroovyArmor(groovyMaterial, 2, GroovyArmorType.legs.getTypeNum())
+		 .setUnlocalizedName("GroovyLeggings")
+		 .setCreativeTab(CreativeTabs.tabCombat)
+		 .setTextureName(GroovyMod.MODID + ":groovy_leggings");
+		
+		groovy_boots = new GroovyArmor(groovyMaterial, 3, GroovyArmorType.boots.getTypeNum())
+		 .setUnlocalizedName("GroovyBoots")
+		 .setCreativeTab(CreativeTabs.tabCombat)
+		 .setTextureName(GroovyMod.MODID + ":groovy_boots");
 		
 		GameRegistry.registerItem(groovy_helmet, "groovy_helment");
+		GameRegistry.registerItem(groovy_chestplate, "groovy_chestplate");
+		GameRegistry.registerItem(groovy_leggings, "groovy_leggings");
+		GameRegistry.registerItem(groovy_boots, "groovy_boots");
+		
 		initializeRecipes();
 		
 	}
@@ -65,7 +106,7 @@ public class GroovyMod {
 	private void initializeRecipes() {
 		
 		//Helmet recipe
-		GameRegistry.addRecipe(new ItemStack(Items.diamond_helmet), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(groovy_helmet), new Object[]{
 	    	"YDY",
 	    	"Y Y",
 	    	"   ",
@@ -74,7 +115,7 @@ public class GroovyMod {
 		});
 		
 		//Chest plate recipe
-		GameRegistry.addRecipe(new ItemStack(Items.diamond_chestplate), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(groovy_chestplate), new Object[]{
 	    	"Y Y",
 	    	"YDY",
 	    	"YYY",
@@ -83,7 +124,7 @@ public class GroovyMod {
 		});
 		
 		//Leggings recipe
-		GameRegistry.addRecipe(new ItemStack(Items.diamond_leggings), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(groovy_leggings), new Object[]{
 	    	"YDY", 
 	    	"Y Y",
 	    	"Y Y",
@@ -92,7 +133,7 @@ public class GroovyMod {
 		});	
 		
 		//Boots recipe
-		GameRegistry.addRecipe(new ItemStack(Items.diamond_boots), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(groovy_boots), new Object[]{
 	    	"   ", 
 	    	"Y Y",
 	    	"Y Y",
