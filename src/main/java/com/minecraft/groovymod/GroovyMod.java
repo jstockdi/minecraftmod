@@ -1,5 +1,7 @@
 package com.minecraft.groovymod;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -142,7 +145,7 @@ public class GroovyMod {
 		.setBlockTextureName(GroovyMod.MODID + ":groovy_lavalamp")
 		.setHardness(0.0F)
 		.setCreativeTab(CreativeTabs.tabDecorations)
-		.setLightLevel(0.9875F)
+		.setLightLevel(0.9999F)
 		.setStepSound(Block.soundTypeAnvil)
 		.setBlockName("GroovyLavalamp");
 		
