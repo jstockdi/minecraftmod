@@ -66,7 +66,7 @@ public class GroovyMod {
 
 	
 	public static final String MODID = "groovymod";
-	public static final String VERSION = "0.1";
+	public static final String VERSION = "0.2";
 	public static final String NAME = "Groovy Mod";
 	
 	public static Item groovy_helmet;
@@ -80,7 +80,7 @@ public class GroovyMod {
 			60, new int[]{2, 5, 4, 2}, 10);
 
 	public static ToolMaterial groovyToolMaterial = EnumHelper.addToolMaterial("Groovy",
-			3, 3000, 10.0F, 30.0F, 25);
+			3, 3000, 10.0F, 10.0F, 25);
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
