@@ -48,7 +48,6 @@ public class GroovyMod {
 
 		public GroovyArmor(ArmorMaterial p_i45325_1_, int p_i45325_2_, int p_i45325_3_) {
 			super(p_i45325_1_, p_i45325_2_, p_i45325_3_);
-			// TODO Auto-generated constructor stub
 		}
 
 		public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
@@ -77,10 +76,12 @@ public class GroovyMod {
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyArmorMaterial = EnumHelper.addArmorMaterial("Groovy", 
-			60, new int[]{2, 5, 4, 2}, 10);
-
+			60, new int[]{5, 6, 5, 4}, 25);
+	//DIAMOND(33, new int[]{3, 8, 6, 3}, 10);
+	
 	public static ToolMaterial groovyToolMaterial = EnumHelper.addToolMaterial("Groovy",
 			3, 3000, 10.0F, 10.0F, 25);
+	//EMERALD(3, 1561, 8.0F, 3.0F, 10),
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
