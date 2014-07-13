@@ -1,7 +1,7 @@
 package com.minecraft.groovymod;
 
-import java.util.Set;
-
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -9,11 +9,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -56,6 +55,15 @@ public class GroovyMod {
 
 	}
 	
+	
+	public class GroovyLavalamp extends BlockTorch {
+
+	}
+	
+	
+	
+	
+	
 	public class GroovyArmor extends ItemArmor {
 
 		public GroovyArmor(ArmorMaterial p_i45325_1_, int p_i45325_2_, int p_i45325_3_) {
@@ -86,6 +94,7 @@ public class GroovyMod {
 	public static Item groovy_boots;
 	public static Item groovy_sword;
 	public static Item groovy_pickaxe;
+	public static Block groovy_lavalamp;
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyArmorMaterial = EnumHelper.addArmorMaterial("Groovy", 
@@ -129,6 +138,14 @@ public class GroovyMod {
 		.setCreativeTab(CreativeTabs.tabTools)
 		.setTextureName(GroovyMod.MODID + ":groovy_pickaxe");
 		
+		groovy_lavalamp = new GroovyLavalamp()
+		.setBlockTextureName(GroovyMod.MODID + ":groovy_lavalamp")
+		.setHardness(0.0F)
+		.setCreativeTab(CreativeTabs.tabDecorations)
+		.setLightLevel(0.9875F)
+		.setStepSound(Block.soundTypeAnvil)
+		.setBlockName("GroovyLavalamp");
+		
 		
 		GameRegistry.registerItem(groovy_helmet, "groovy_helment");
 		GameRegistry.registerItem(groovy_chestplate, "groovy_chestplate");
@@ -136,6 +153,8 @@ public class GroovyMod {
 		GameRegistry.registerItem(groovy_boots, "groovy_boots");
 		GameRegistry.registerItem(groovy_sword, "groovy_sword");
 		GameRegistry.registerItem(groovy_pickaxe, "groovy_pickaxe");
+		
+		GameRegistry.registerBlock(groovy_lavalamp, "Groovy Lavalamp");
 		
 		initializeRecipes();
 		
