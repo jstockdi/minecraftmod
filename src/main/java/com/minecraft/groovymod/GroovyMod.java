@@ -1,5 +1,7 @@
 package com.minecraft.groovymod;
 
+import java.util.Set;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -7,9 +9,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -39,9 +43,17 @@ public class GroovyMod {
 	
 	public class GroovySword extends ItemSword{
 
-		public GroovySword(ToolMaterial toolMaterial) {
-			super(toolMaterial);
+		public GroovySword() {
+			super(groovyToolMaterial);
 		}
+	}
+	
+	public class GroovyPickaxe extends ItemPickaxe{
+
+		protected GroovyPickaxe() {
+			super(groovyToolMaterial);
+		}
+
 	}
 	
 	public class GroovyArmor extends ItemArmor {
@@ -73,6 +85,7 @@ public class GroovyMod {
 	public static Item groovy_chestplate;
 	public static Item groovy_boots;
 	public static Item groovy_sword;
+	public static Item groovy_pickaxe;
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyArmorMaterial = EnumHelper.addArmorMaterial("Groovy", 
@@ -106,16 +119,23 @@ public class GroovyMod {
 		 .setCreativeTab(CreativeTabs.tabCombat)
 		 .setTextureName(GroovyMod.MODID + ":groovy_boots");
 		
-		groovy_sword = new GroovySword(groovyToolMaterial)
+		groovy_sword = new GroovySword()
 		.setUnlocalizedName("GroovySword")
 		.setCreativeTab(CreativeTabs.tabCombat)
 		.setTextureName(GroovyMod.MODID + ":groovy_sword");
+		
+		groovy_pickaxe = new GroovyPickaxe()
+		.setUnlocalizedName("GroovyPickaxe")
+		.setCreativeTab(CreativeTabs.tabTools)
+		.setTextureName(GroovyMod.MODID + ":groovy_pickaxe");
+		
 		
 		GameRegistry.registerItem(groovy_helmet, "groovy_helment");
 		GameRegistry.registerItem(groovy_chestplate, "groovy_chestplate");
 		GameRegistry.registerItem(groovy_leggings, "groovy_leggings");
 		GameRegistry.registerItem(groovy_boots, "groovy_boots");
 		GameRegistry.registerItem(groovy_sword, "groovy_sword");
+		GameRegistry.registerItem(groovy_pickaxe, "groovy_pickaxe");
 		
 		initializeRecipes();
 		
@@ -163,6 +183,16 @@ public class GroovyMod {
 		GameRegistry.addRecipe(new ItemStack(groovy_sword), new Object[]{
 	    	" Y ", 
 	    	" D ",
+	    	" S ",
+	    	'Y', Blocks.yellow_flower,
+	    	'D', Items.diamond,
+	    	'S', Items.stick
+		});
+		
+		//Pickaxe recipe
+		GameRegistry.addRecipe(new ItemStack(groovy_pickaxe), new Object[]{
+	    	"YDY", 
+	    	" S ",
 	    	" S ",
 	    	'Y', Blocks.yellow_flower,
 	    	'D', Items.diamond,
