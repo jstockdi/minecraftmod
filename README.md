@@ -8,7 +8,7 @@ Commands
 ============
 
 * Use "Client" in eclipse for testing
-* Use <pre>gradlew build</pre> to export the mod.  Don't forget to change the version number in build.gradle.
+* Use <pre>./gradlew build</pre> to export the mod.  Don't forget to change the version number in build.gradle.
 
 
 
@@ -26,3 +26,9 @@ Installing 1.7.2 Forge
 * Change the version to Forge-1.7.1 (or similar)
 * Now you should be able to put the groovymod in the $MINECRAFT_HOME/mods folder and restart.
 
+
+Changelog
+==========================
+* 0.3 - Adding scooby snack and disco ball
+* 0.2 - More stuff
+* 0.1 - Getting started
