@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "groovymod",
+  "name": "Groovy Mod",
+  "description": "Mod with stuff that is supposed to be groovy.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["jon077","jonah0317"],
+  "credits": "Jonah, Deirdre, Luke, for making the world awesome",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
