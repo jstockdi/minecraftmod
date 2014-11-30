@@ -5,5 +5,8 @@ item.GroovyLeggings.name=Groovy Leggings
 item.GroovyBoots.name=Groovy Boots
 item.GroovyPickaxe.name=Groovy Pickaxe
 item.GroovyHoe.name=Groovy Hoe
+item.GroovyScoobySnack.name=Scooby Snack
+
 
 tile.GroovyLavalamp.name=Groovy Lava Lamp
+tile.GroovyDiscoball.name=Groovy Disco Ball

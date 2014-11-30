@@ -3,7 +3,9 @@ package com.minecraft.groovymod;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockGlowstone;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,21 +58,32 @@ public class GroovyMod {
 
 		public GroovySword() {
 			super(groovyToolMaterial);
+
+			setUnlocalizedName("GroovySword");
+			setCreativeTab(CreativeTabs.tabCombat);
+			setTextureName(GroovyMod.MODID + ":groovy_sword");
 		}
 	}
 	
-	public class GroovyScoopySnack extends ItemFood{
+	public class GroovyScoobySnack extends ItemFood{
 
-		public GroovyScoopySnack(int arg0, float arg1, boolean arg2) {
-			super(5, 0.9F, false);
+		public GroovyScoobySnack() {
+			super(10,  //heal amount 
+					0.9F,   //saturationModifier
+					false  //isWolfsFavoriteMeat
+					);
 		}
 		
 		
 		@Override
 		public ItemStack onEaten(ItemStack arg0, World arg1, EntityPlayer player) {
+			ItemStack itemStack = super.onEaten(arg0, arg1, player);
 			
-			player.jump();  // can we put this in a thread and make the player jump repeatedly afterwards?
-			return super.onEaten(arg0, arg1, player);
+			for(int i=0;i<5;i++){
+				player.jump();  // can we put this in a thread and make the player jump repeatedly afterwards?
+			}
+			
+			return itemStack;
 		}
 	}
 	
@@ -111,6 +124,15 @@ public class GroovyMod {
 	
 	public class GroovyLavalamp extends BlockTorch {
 
+		
+		public GroovyLavalamp() {
+			setBlockTextureName(GroovyMod.MODID + ":groovy_lavalamp");
+			setHardness(0.0F);
+			setCreativeTab(CreativeTabs.tabDecorations);
+			setLightLevel(0.9999F);
+			setStepSound(Block.soundTypeAnvil);
+			setBlockName("GroovyLavalamp");
+		}
 		@Override
 		@SideOnly(Side.CLIENT)
 		public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
@@ -165,6 +187,20 @@ public class GroovyMod {
 			return null;
 		}
 	}
+	
+	public static class GroovyDiscoball extends BlockGlowstone{
+
+		public GroovyDiscoball() {
+			super(Material.glass);
+			setHardness(0.3F);
+			setStepSound(Block.soundTypeGlass);
+			setLightLevel(1.0F);
+			setBlockName("GroovyDiscoball");
+			setBlockTextureName(GroovyMod.MODID + ":groovy_discoball");
+			setCreativeTab(CreativeTabs.tabDecorations);
+		}
+		
+	}
 
 	
 	public static final String MODID = "groovymod";
@@ -179,6 +215,8 @@ public class GroovyMod {
 	public static Item groovy_pickaxe;
 	public static Item groovy_hoe;
 	public static Block groovy_lavalamp;
+	public static Block groovy_discoball;
+	public static Item groovy_scoobysnack;
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyArmorMaterial = EnumHelper.addArmorMaterial("Groovy", 
@@ -188,6 +226,7 @@ public class GroovyMod {
 	public static ToolMaterial groovyToolMaterial = EnumHelper.addToolMaterial("Groovy",
 			3, 3000, 10.0F, 10.0F, 25);
 	//EMERALD(3, 1561, 8.0F, 3.0F, 10),
+	
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -223,10 +262,12 @@ public class GroovyMod {
 		 .setCreativeTab(CreativeTabs.tabCombat)
 		 .setTextureName(GroovyMod.MODID + ":groovy_boots");
 		
-		groovy_sword = new GroovySword()
-		.setUnlocalizedName("GroovySword")
-		.setCreativeTab(CreativeTabs.tabCombat)
-		.setTextureName(GroovyMod.MODID + ":groovy_sword");
+		groovy_scoobysnack = new GroovyScoobySnack()
+		.setUnlocalizedName("GroovyScoobySnack")
+		.setCreativeTab(CreativeTabs.tabFood)
+		.setTextureName(GroovyMod.MODID + ":groovy_scoobysnack");
+		
+		groovy_sword = new GroovySword();
 		
 		groovy_pickaxe = new GroovyPickaxe()
 		.setUnlocalizedName("GroovyPickaxe")
@@ -235,13 +276,9 @@ public class GroovyMod {
 		
 		groovy_hoe = new GroovyHoe();
 		
-		groovy_lavalamp = new GroovyLavalamp()
-		.setBlockTextureName(GroovyMod.MODID + ":groovy_lavalamp")
-		.setHardness(0.0F)
-		.setCreativeTab(CreativeTabs.tabDecorations)
-		.setLightLevel(0.9999F)
-		.setStepSound(Block.soundTypeAnvil)
-		.setBlockName("GroovyLavalamp");
+		groovy_lavalamp = new GroovyLavalamp();
+		
+		groovy_discoball = new GroovyDiscoball();
 	}
 
 
@@ -253,8 +290,11 @@ public class GroovyMod {
 		GameRegistry.registerItem(groovy_sword, "groovy_sword");
 		GameRegistry.registerItem(groovy_pickaxe, "groovy_pickaxe");
 		GameRegistry.registerItem(groovy_hoe, "groovy_hoe");
+		GameRegistry.registerItem(groovy_scoobysnack, "groovy_scoobysnack");
+		
 		
 		GameRegistry.registerBlock(groovy_lavalamp, "Groovy Lavalamp");
+		GameRegistry.registerBlock(groovy_discoball, "Groovy Discoball");
 	}
 
 
@@ -324,6 +364,21 @@ public class GroovyMod {
 	    	'D', Items.diamond,
 	    	'S', Items.stick
 		});
+		
+		//Scooby snack recipe
+		GameRegistry.addRecipe(new ItemStack(groovy_scoobysnack, 6, 0), new Object[]{
+	    	"SD ", 
+	    	" E ",
+	    	"  G",
+	    	'S', Items.sugar,
+	    	'D', Blocks.dirt,
+	    	'E', Items.egg,
+	    	'G', Blocks.grass
+		});
+				
+				
+				
+		
 	}
 	
 	
