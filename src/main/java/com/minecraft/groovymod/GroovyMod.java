@@ -366,19 +366,15 @@ public class GroovyMod {
 		});
 		
 		//Scooby snack recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_scoobysnack, 6, 0), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(groovy_scoobysnack, 24, 0), new Object[]{
 	    	"SD ", 
 	    	" E ",
 	    	"  G",
 	    	'S', Items.sugar,
 	    	'D', Blocks.dirt,
 	    	'E', Items.egg,
-	    	'G', Blocks.grass
+	    	'G', Blocks.tallgrass
 		});
-				
-				
-				
-		
 	}
 	
 	
