@@ -1,16 +1,29 @@
 package com.minecraft.groovymod;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlowstone;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.entity.RenderDragon;
+import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityGiantZombie;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -22,10 +35,17 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.entity.living.ZombieEvent;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -36,6 +56,79 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = GroovyMod.MODID, name = GroovyMod.NAME, version = GroovyMod.VERSION)
 public class GroovyMod {
+	
+	
+	public static class RenderHippieZombie extends RenderZombie{
+		
+		private static final ResourceLocation hippieZombieTextures = new ResourceLocation("textures/entity/hippiezombie/hippiezombie.png");
+		
+		@Override
+		protected ResourceLocation getEntityTexture(Entity par1Entity) {
+			return hippieZombieTextures;
+		}
+	}
+	
+	public static class EntityHippieZombie extends EntityZombie{
+
+		public static final int ID = 117;
+
+		public EntityHippieZombie(World world) {
+			super(world);
+		}
+		
+		@Override
+		public IEntityLivingData onSpawnWithEgg(
+				IEntityLivingData par1EntityLivingData) {
+			IEntityLivingData onSpawnWithEgg = super.onSpawnWithEgg(par1EntityLivingData);
+			setVillager(false);
+			return onSpawnWithEgg;
+		}
+		
+		@Override
+		protected Item getDropItem() {
+			dropRareDrop(0);
+			return groovy_scoobysnack;
+		}
+		
+		@Override
+		protected void dropRareDrop(int par1) {
+			switch (this.rand.nextInt(4))
+	        {
+	            case 0:
+	                this.dropItem(Items.diamond_chestplate, 1);
+	                break;
+	            case 1:
+	            	this.dropItem(Items.diamond_boots, 1);
+	                break;
+	            case 2:
+	            	this.dropItem(Items.diamond_leggings, 1);
+	                break;
+	            case 3:
+	            	this.dropItem(Items.diamond_helmet, 1);
+	                break;
+	        }	
+		}
+		
+		
+		@Override
+		protected void addRandomArmor() {
+			
+			int count = 0;
+			for(Item item : new Item[]{Items.diamond_sword, Items.diamond_helmet, Items.diamond_chestplate, Items.diamond_leggings, Items.diamond_boots}){
+				if (this.rand.nextFloat() < (this.worldObj.difficultySetting == EnumDifficulty.HARD ? 0.5F : 0.25F)) {
+					this.setCurrentItemOrArmor(count++, new ItemStack(item));
+				}	
+			}
+		}
+		
+		protected void applyEntityAttributes() {
+			super.applyEntityAttributes();
+			this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(80.0D);
+			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.35000000417232513D);
+			this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
+		}
+	}
+	
 	
 	private static enum GroovyArmorType{
 		helmet(0),
@@ -65,8 +158,17 @@ public class GroovyMod {
 		}
 	}
 	
-	public class GroovyScoobySnack extends ItemFood{
+	public class GroovyFireball extends EntitySmallFireball{
 
+		public GroovyFireball(World par1World) {
+			super(par1World);
+		}
+	}
+	
+	public static class GroovyScoobySnack extends ItemFood{
+
+		public static ScheduledExecutorService SCOOBYSNACK_EXECUTOR = Executors.newScheduledThreadPool(4);
+		
 		public GroovyScoobySnack() {
 			super(10,  //heal amount 
 					0.9F,   //saturationModifier
@@ -76,11 +178,21 @@ public class GroovyMod {
 		
 		
 		@Override
-		public ItemStack onEaten(ItemStack arg0, World arg1, EntityPlayer player) {
-			ItemStack itemStack = super.onEaten(arg0, arg1, player);
+		public ItemStack onEaten(ItemStack stack, World world, final EntityPlayer player) {
+			ItemStack itemStack = super.onEaten(stack, world, player);
 			
 			for(int i=0;i<5;i++){
-				player.jump();  // can we put this in a thread and make the player jump repeatedly afterwards?
+				
+				SCOOBYSNACK_EXECUTOR.schedule(new Runnable() {
+					
+					@Override
+					public void run() {
+						player.jump();
+					}
+				}, i, TimeUnit.SECONDS);
+				
+				player.addChatMessage(new ChatComponentText("Yum!  Yum!  Yum!  I love Rooby Racks"));
+				player.extinguish();
 			}
 			
 			return itemStack;
@@ -237,7 +349,18 @@ public class GroovyMod {
 		
 		initializeRecipes();
 		
+		initializeMobs();
 		
+		
+	}
+
+
+	private void initializeMobs() {
+		EntityList.addMapping(EntityHippieZombie.class, 
+				EntityHippieZombie.class.getSimpleName(), EntityHippieZombie.ID,
+				15373203, 5009705); 
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityHippieZombie.class, new RenderHippieZombie());
 	}
 
 

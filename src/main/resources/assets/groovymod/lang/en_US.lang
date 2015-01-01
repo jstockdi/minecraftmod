@@ -1,3 +1,4 @@
+##items
 item.GroovySword.name=Groovy Sword
 item.GroovyHelmet.name=Groovy Helmet
 item.GroovyChestplate.name=Groovy Chestplate
@@ -8,5 +9,9 @@ item.GroovyHoe.name=Groovy Hoe
 item.GroovyScoobySnack.name=Scooby Snack
 
 
+##tiles
 tile.GroovyLavalamp.name=Groovy Lava Lamp
 tile.GroovyDiscoball.name=Groovy Disco Ball
+
+##entities
+entity.EntityHippieZombie.name=HippieZombie
