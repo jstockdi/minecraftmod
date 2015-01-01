@@ -34,16 +34,21 @@ public class GroovyMod {
 	public static final String VERSION = "0.2";
 	public static final String NAME = "Groovy Mod";
 	
-	public static Item groovy_helmet;
-	public static Item groovy_leggings;
-	public static Item groovy_chestplate;
-	public static Item groovy_boots;
-	public static Item groovy_sword;
-	public static Item groovy_pickaxe;
-	public static Item groovy_hoe;
-	public static Block groovy_lavalamp;
-	public static Block groovy_discoball;
-	public static Item groovy_scoobysnack;
+	public static Item item_helmet;
+	public static Item item_leggings;
+	public static Item item_chestplate;
+	public static Item item_boots;
+	
+	public static Item item_sword;
+	public static Item item_pickaxe;
+	public static Item item_hoe;
+	
+	public static Item item_scoobysnack;
+	
+	public static Block block_lavalamp;
+	public static Block block_discoball;
+	
+	
 	
 	//Create the material to make the groovy armor
 	public static ArmorMaterial groovyArmorMaterial = EnumHelper.addArmorMaterial("Groovy", 
@@ -70,11 +75,11 @@ public class GroovyMod {
 
 
 	private void initializeBlocks() {
-		groovy_lavalamp = new BlockGroovyLavalamp();
-		groovy_discoball = new BlockGroovyDiscoball();
+		block_lavalamp = new BlockGroovyLavalamp();
+		block_discoball = new BlockGroovyDiscoball();
 		
-		GameRegistry.registerBlock(groovy_lavalamp, "Groovy Lavalamp");
-		GameRegistry.registerBlock(groovy_discoball, "Groovy Discoball");
+		GameRegistry.registerBlock(block_lavalamp, "Groovy Lavalamp");
+		GameRegistry.registerBlock(block_discoball, "Groovy Discoball");
 	}
 
 
@@ -88,26 +93,26 @@ public class GroovyMod {
 
 	private void initializeItems() {
 
-		groovy_helmet = ItemGroovyArmor.newHelmet();
-		groovy_chestplate = ItemGroovyArmor.newChestplate();
-		groovy_leggings = ItemGroovyArmor.newLeggings();
-		groovy_boots = ItemGroovyArmor.newBoots();
+		item_helmet = ItemGroovyArmor.newHelmet();
+		item_chestplate = ItemGroovyArmor.newChestplate();
+		item_leggings = ItemGroovyArmor.newLeggings();
+		item_boots = ItemGroovyArmor.newBoots();
 		
-		groovy_sword = new ItemGroovySword();
-		groovy_pickaxe = new ItemGroovyPickaxe();
-		groovy_hoe = new ItemGroovyHoe();
+		item_sword = new ItemGroovySword();
+		item_pickaxe = new ItemGroovyPickaxe();
+		item_hoe = new ItemGroovyHoe();
 		
-		groovy_scoobysnack = new ItemGroovyScoobySnack();
+		item_scoobysnack = new ItemGroovyScoobySnack();
 		
 		
-		GameRegistry.registerItem(groovy_helmet, "groovy_helment");
-		GameRegistry.registerItem(groovy_chestplate, "groovy_chestplate");
-		GameRegistry.registerItem(groovy_leggings, "groovy_leggings");
-		GameRegistry.registerItem(groovy_boots, "groovy_boots");
-		GameRegistry.registerItem(groovy_sword, "groovy_sword");
-		GameRegistry.registerItem(groovy_pickaxe, "groovy_pickaxe");
-		GameRegistry.registerItem(groovy_hoe, "groovy_hoe");
-		GameRegistry.registerItem(groovy_scoobysnack, "groovy_scoobysnack");
+		GameRegistry.registerItem(item_helmet, "groovy_helment");
+		GameRegistry.registerItem(item_chestplate, "groovy_chestplate");
+		GameRegistry.registerItem(item_leggings, "groovy_leggings");
+		GameRegistry.registerItem(item_boots, "groovy_boots");
+		GameRegistry.registerItem(item_sword, "groovy_sword");
+		GameRegistry.registerItem(item_pickaxe, "groovy_pickaxe");
+		GameRegistry.registerItem(item_hoe, "groovy_hoe");
+		GameRegistry.registerItem(item_scoobysnack, "groovy_scoobysnack");
 
 	}
 
@@ -117,7 +122,7 @@ public class GroovyMod {
 	private void initializeRecipes() {
 		
 		//Helmet recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_helmet), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_helmet), new Object[]{
 	    	"YDY",
 	    	"Y Y",
 	    	"   ",
@@ -126,7 +131,7 @@ public class GroovyMod {
 		});
 		
 		//Chest plate recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_chestplate), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_chestplate), new Object[]{
 	    	"Y Y",
 	    	"YDY",
 	    	"YYY",
@@ -135,7 +140,7 @@ public class GroovyMod {
 		});
 		
 		//Leggings recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_leggings), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_leggings), new Object[]{
 	    	"YDY", 
 	    	"Y Y",
 	    	"Y Y",
@@ -144,7 +149,7 @@ public class GroovyMod {
 		});	
 		
 		//Boots recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_boots), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_boots), new Object[]{
 	    	"   ", 
 	    	"Y Y",
 	    	"Y Y",
@@ -152,7 +157,7 @@ public class GroovyMod {
 		});
 		
 		//Sword recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_sword), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_sword), new Object[]{
 	    	" Y ", 
 	    	" D ",
 	    	" S ",
@@ -162,7 +167,7 @@ public class GroovyMod {
 		});
 		
 		//Pickaxe recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_pickaxe), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_pickaxe), new Object[]{
 	    	"YDY", 
 	    	" S ",
 	    	" S ",
@@ -172,7 +177,7 @@ public class GroovyMod {
 		});
 		
 		//Hoe recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_hoe), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_hoe), new Object[]{
 	    	"YD ", 
 	    	" S ",
 	    	" S ",
@@ -182,7 +187,7 @@ public class GroovyMod {
 		});
 		
 		//Scooby snack recipe
-		GameRegistry.addRecipe(new ItemStack(groovy_scoobysnack, 24, 0), new Object[]{
+		GameRegistry.addRecipe(new ItemStack(item_scoobysnack, 24, 0), new Object[]{
 	    	"SD ", 
 	    	" E ",
 	    	"  G",

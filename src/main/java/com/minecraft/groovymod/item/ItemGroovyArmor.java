@@ -62,11 +62,11 @@ public class ItemGroovyArmor extends ItemArmor {
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
 		
-		if (stack.getItem() == GroovyMod.groovy_helmet || 
-				stack.getItem() == GroovyMod.groovy_chestplate ||
-				stack.getItem() == GroovyMod.groovy_boots) {
+		if (stack.getItem() == GroovyMod.item_helmet || 
+				stack.getItem() == GroovyMod.item_chestplate || 
+				stack.getItem() == GroovyMod.item_boots) {
 			return GroovyMod.MODID + ":textures/armor/groovy_layer_1.png";
-		}else if (stack.getItem() == GroovyMod.groovy_leggings) {
+		}else if (stack.getItem() == GroovyMod.item_leggings) {
 			return GroovyMod.MODID + ":textures/armor/groovy_layer_2.png";
 		}
 		return null;
