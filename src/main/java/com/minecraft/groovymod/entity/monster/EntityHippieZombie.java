@@ -29,7 +29,6 @@ public class EntityHippieZombie extends EntityZombie{
 	
 	@Override
 	protected Item getDropItem() {
-		dropRareDrop(0);
 		return GroovyMod.item_scoobysnack;
 	}
 	
