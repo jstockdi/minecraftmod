@@ -4,6 +4,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.minecraft.groovymod.GroovyMod;
+
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -19,6 +22,10 @@ public class ItemGroovyScoobySnack extends ItemFood{
 				0.9F,   //saturationModifier
 				false  //isWolfsFavoriteMeat
 				);
+		
+		setUnlocalizedName("GroovyScoobySnack")
+		.setCreativeTab(CreativeTabs.tabFood)
+		.setTextureName(GroovyMod.MODID + ":groovy_scoobysnack");
 	}
 	
 	

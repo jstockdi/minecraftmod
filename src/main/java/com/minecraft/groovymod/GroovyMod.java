@@ -1,7 +1,6 @@
 package com.minecraft.groovymod;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -31,23 +30,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @Mod(modid = GroovyMod.MODID, name = GroovyMod.NAME, version = GroovyMod.VERSION)
 public class GroovyMod {
 	
-	private static enum GroovyArmorType{
-		helmet(0),
-		chestplate(1),
-		legs(2),
-		boots(3);
-		
-		private int typeNum;
-
-		private GroovyArmorType(int typeNum) {
-			this.typeNum = typeNum;
-		}
-		
-		public int getTypeNum() {
-			return typeNum;
-		}
-	}
-	
 	public static final String MODID = "groovymod";
 	public static final String VERSION = "0.2";
 	public static final String NAME = "Groovy Mod";
@@ -76,9 +58,9 @@ public class GroovyMod {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
-		instantiateItems();
+		initializeItems();
 		
-		registerItems();
+		initializeBlocks();
 		
 		initializeRecipes();
 		
@@ -87,57 +69,37 @@ public class GroovyMod {
 	}
 
 
+	private void initializeBlocks() {
+		groovy_lavalamp = new BlockGroovyLavalamp();
+		groovy_discoball = new BlockGroovyDiscoball();
+		
+		GameRegistry.registerBlock(groovy_lavalamp, "Groovy Lavalamp");
+		GameRegistry.registerBlock(groovy_discoball, "Groovy Discoball");
+	}
+
+
 	private void initializeMobs() {
 		EntityList.addMapping(EntityHippieZombie.class, 
-				EntityHippieZombie.class.getSimpleName(), EntityHippieZombie.ID,
-				15373203, 5009705); 
+				EntityHippieZombie.class.getSimpleName(), EntityHippieZombie.ID, 15373203, 5009705); 
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityHippieZombie.class, new RenderHippieZombie());
 	}
 
 
-	private void instantiateItems() {
-		groovy_helmet = new ItemGroovyArmor(groovyArmorMaterial, 0, GroovyArmorType.helmet.getTypeNum())
-		 .setUnlocalizedName("GroovyHelmet")
-		 .setCreativeTab(CreativeTabs.tabCombat)
-		 .setTextureName(GroovyMod.MODID + ":groovy_helmet");
-		
-		groovy_chestplate = new ItemGroovyArmor(groovyArmorMaterial, 1, GroovyArmorType.chestplate.getTypeNum())
-		 .setUnlocalizedName("GroovyChestplate")
-		 .setCreativeTab(CreativeTabs.tabCombat)
-		 .setTextureName(GroovyMod.MODID + ":groovy_chestplate");
-		
-		groovy_leggings = new ItemGroovyArmor(groovyArmorMaterial, 2, GroovyArmorType.legs.getTypeNum())
-		 .setUnlocalizedName("GroovyLeggings")
-		 .setCreativeTab(CreativeTabs.tabCombat)
-		 .setTextureName(GroovyMod.MODID + ":groovy_leggings");
-		
-		groovy_boots = new ItemGroovyArmor(groovyArmorMaterial, 3, GroovyArmorType.boots.getTypeNum())
-		 .setUnlocalizedName("GroovyBoots")
-		 .setCreativeTab(CreativeTabs.tabCombat)
-		 .setTextureName(GroovyMod.MODID + ":groovy_boots");
-		
-		groovy_scoobysnack = new ItemGroovyScoobySnack()
-		.setUnlocalizedName("GroovyScoobySnack")
-		.setCreativeTab(CreativeTabs.tabFood)
-		.setTextureName(GroovyMod.MODID + ":groovy_scoobysnack");
+	private void initializeItems() {
+
+		groovy_helmet = ItemGroovyArmor.newHelmet();
+		groovy_chestplate = ItemGroovyArmor.newChestplate();
+		groovy_leggings = ItemGroovyArmor.newLeggings();
+		groovy_boots = ItemGroovyArmor.newBoots();
 		
 		groovy_sword = new ItemGroovySword();
-		
-		groovy_pickaxe = new ItemGroovyPickaxe()
-		.setUnlocalizedName("GroovyPickaxe")
-		.setCreativeTab(CreativeTabs.tabTools)
-		.setTextureName(GroovyMod.MODID + ":groovy_pickaxe");
-		
+		groovy_pickaxe = new ItemGroovyPickaxe();
 		groovy_hoe = new ItemGroovyHoe();
 		
-		groovy_lavalamp = new BlockGroovyLavalamp();
+		groovy_scoobysnack = new ItemGroovyScoobySnack();
 		
-		groovy_discoball = new BlockGroovyDiscoball();
-	}
-
-
-	private void registerItems() {
+		
 		GameRegistry.registerItem(groovy_helmet, "groovy_helment");
 		GameRegistry.registerItem(groovy_chestplate, "groovy_chestplate");
 		GameRegistry.registerItem(groovy_leggings, "groovy_leggings");
@@ -146,11 +108,10 @@ public class GroovyMod {
 		GameRegistry.registerItem(groovy_pickaxe, "groovy_pickaxe");
 		GameRegistry.registerItem(groovy_hoe, "groovy_hoe");
 		GameRegistry.registerItem(groovy_scoobysnack, "groovy_scoobysnack");
-		
-		
-		GameRegistry.registerBlock(groovy_lavalamp, "Groovy Lavalamp");
-		GameRegistry.registerBlock(groovy_discoball, "Groovy Discoball");
+
 	}
+
+
 
 
 	private void initializeRecipes() {

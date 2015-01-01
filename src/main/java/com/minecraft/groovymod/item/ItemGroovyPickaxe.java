@@ -5,6 +5,7 @@ import java.util.Random;
 import com.minecraft.groovymod.GroovyMod;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
@@ -16,6 +17,10 @@ public class ItemGroovyPickaxe extends ItemPickaxe{
 
 	public ItemGroovyPickaxe() {
 		super(GroovyMod.groovyToolMaterial);
+		
+		setUnlocalizedName("GroovyPickaxe").
+		setCreativeTab(CreativeTabs.tabTools).
+		setTextureName(GroovyMod.MODID + ":groovy_pickaxe");
 	}
 	
 	 @Override
