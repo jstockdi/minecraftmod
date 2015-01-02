@@ -56,7 +56,12 @@ public class EntityHippieZombie extends EntityZombie{
 	protected void addRandomArmor() {
 		
 		int count = 0;
-		for(Item item : new Item[]{Items.diamond_sword, Items.diamond_helmet, Items.diamond_chestplate, Items.diamond_leggings, Items.diamond_boots}){
+		for(Item item : new Item[]{
+				Items.diamond_sword, 
+				Items.diamond_helmet, 
+				Items.diamond_chestplate, 
+				Items.diamond_leggings, 
+				Items.diamond_boots}){
 			if (this.rand.nextFloat() < (this.worldObj.difficultySetting == EnumDifficulty.HARD ? 0.5F : 0.25F)) {
 				this.setCurrentItemOrArmor(count++, new ItemStack(item));
 			}	
